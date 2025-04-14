@@ -1,0 +1,28 @@
+create soma
+soma psection()
+
+objref stim
+soma stim = new IClamp(0.5)
+stim.amp = 50
+stim.dur = 6
+stim.del = 2
+
+load_file("stdrun.hoc")
+tstop=3
+objref vecv, veci
+vecv = new Vector()
+veci = new Vector()
+vecv.size
+vecv.x(1)
+vecv.record(&soma.v(0.5))
+veci.record(&stim.i)
+
+
+run()
+
+
+objref g
+g = new Graph()
+g.size(0, tstop, -80, 50)
+veci.line (g, dt, 1, 2)
+vecv.line(g, dt, 2, 2)
